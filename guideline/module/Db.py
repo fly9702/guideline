@@ -9,7 +9,7 @@ import datetime
 
 
 class Db:
-    def D_01(host):
+    def D_01(self,host):
         command = "ip a"
         is_safe = False
         score = 0
@@ -35,13 +35,14 @@ class Db:
         info = Info(host.id,date,"W_01",command,result,is_safe,score)
         #5. 정보 객체 반환
         return info
-
-
+db =Db()
 
 # Test
 # 상황에 맞게 값 수정 가능
-hosta = Host(1,"unix","rocky17","172.16.17.100","root","asd123!@")
+#hosta = Host(1,"Db","db1","172.16.0.90","guideline","asd123!@")
 
-info = Db.D_01(hosta)
-print(vars(info))
+#info = Db.D_01(hosta)
+#print(vars(info))
 
+#result = util.squery(hosta,"SELECT * FROM host")
+#print(result)

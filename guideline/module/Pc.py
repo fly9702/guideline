@@ -36,12 +36,12 @@ class Pc:
         #5. 정보 객체 반환
         return info
 
-
+pc = Pc()
 
 # Test
 # 상황에 맞게 값 수정 가능
-hosta = Host(1,"unix","rocky17","172.16.17.100","root","asd123!@")
+#hosta = Host(1,"unix","rocky17","172.16.17.100","root","asd123!@")
 
-info = Pc.PC_01(hosta)
-print(vars(info))
+#info = Pc.PC_01(hosta)
+#print(vars(info))
 

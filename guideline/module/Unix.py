@@ -8,7 +8,7 @@ import datetime
 
 
 class Unix:
-    def U_01(host):
+    def U_01(self,host):
         command = "grep -i '^PermitRootLogin' /etc/ssh/sshd_config"
         is_safe = False
         score = 0
@@ -36,13 +36,13 @@ class Unix:
         #5. 정보 객체 반환
         return info
 
-
+unix = Unix()
 
 # Test
 # 상황에 맞게 값 수정 가능
-from vo.Host import Host
-hosta = Host(1,"unix","rocky17","172.16.17.100","root","asd123!@")
+#from vo.Host import Host
+#hosta = Host(1,"unix","rocky17","172.16.17.100","root","asd123!@")
 
-info = Unix.U_01(hosta)
-print(vars(info))
+#info = Unix.U_01(hosta)
+#print(vars(info))
 

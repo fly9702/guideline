@@ -9,7 +9,7 @@ import datetime
 
 
 class Windows:
-    def W_01(host):
+    def W_01(self,host):
         command = "ip a"
         is_safe = False
         score = 0
@@ -36,12 +36,12 @@ class Windows:
         #5. 정보 객체 반환
         return info
 
-
+windows = Windows()
 
 # Test
 # 상황에 맞게 값 수정 가능
-hosta = Host(1,"unix","rocky17","172.16.17.100","root","asd123!@")
+#hosta = Host(1,"unix","rocky17","172.16.17.100","root","asd123!@")
 
-info = Windows.W_01(hosta)
-print(vars(info))
+#info = Windows.W_01(hosta)
+#print(vars(info))
 

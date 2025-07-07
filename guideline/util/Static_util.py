@@ -7,11 +7,34 @@ import netmiko
 import time
 
 class Static_util:
-    def query(self,cmd):
+    def query(self,cmd,params):
         # db.txt 파일에서 정보 읽기
-        with open("/root/guideline/util/db.txt", "r") as f:
+        with open(__file__+"/../db.txt", "r", encoding="utf-8") as f:
             lines = [line.strip() for line in f.readlines()]
             ip, port, id, pw = lines[0], lines[1], lines[2], lines[3]
+        # DB 연결
+        db = pymysql.connect(host=ip, port=int(port), user=id, passwd=pw, charset='utf8', db="guideline")
+        cur = db.cursor()
+        params = []
+        if isinstance(params,dict) and len(params) >= 1 :
+            cur.execute(cmd,params)
+        else :
+            cur.execute(cmd)
+        rows = []
+        if "SELECT" in cmd or "SHOW" in cmd:
+            rows = cur.fetchall()
+        elif "INSERT" in cmd:
+            db.commit()
+            rows = ["query ok"]
+        db.close()
+        return list(rows)
+    
+    def squery(self,host,cmd):
+        # host에서 정보 얻기
+        ip = host.ip
+        port = 3306
+        id = host.username
+        pw = host.password
 
         # DB 연결
         db = pymysql.connect(host=ip, port=int(port), user=id, passwd=pw, charset='utf8', db="guideline")
@@ -71,8 +94,9 @@ util = Static_util()
 
 #test 
 #from vo.Host import Host
+#print(__file__)
 #hosta = Host(1,"unix","rocky17","172.16.17.100","root","asd123!@")
-#resulta = query("SELECT * FROM host")
+#resulta = util.query("SELECT * FROM host")
 #print(resulta)
 #print(hosta.id)
 #result = util.para_connect(hosta,"ip a",None)

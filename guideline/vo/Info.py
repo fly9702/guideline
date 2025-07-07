@@ -8,4 +8,3 @@ class Info:
         self.is_safe = is_safe
         self.score = score
     
-        
