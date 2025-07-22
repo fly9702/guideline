@@ -98,13 +98,32 @@ class Main :
 
     # 점검 함수 하나를 호출해서 실행하고 결과값을 db에 저장하는 함수 - 함수 1
     def call_meth(self,category,host,meth):
+        print( meth+"를 시작합니다.")
         info = getattr(category,meth)(host)
-        print(info)
-        util.query("INSERT INTO info(id,date,content,command,result,is_safe,score) VALUES (%d, %s, %s, %s,%b ,%i)"%(info.id, info.date, info.content, info.command, info.result, info.is_safe, info.score)) 
+        #print(info)
+        try:
+            cmd = """INSERT INTO info(id,date,content,command,result,is_safe,score) VALUES (%s, %s, %s, %s, %s,%s ,%s)"""
+            is_safe_val = 1 if info.is_safe else 0
+            para = (info.id, info.date, info.content, info.command, info.result,is_safe_val , info.score)
+            util.query(cmd,para)
+        except Exception as e:
+            print("쿼리 실행중 에러가 발생했습니다.")
+            print("에러 메시지:", e)
+        finally:
+            print( meth+"가 끝났습니다.")
+        
 
     # main 실행 함수
     def run(self):
         self.getHost()
+#        for host_list in self.category_list:
+#            print("--------------------------------------------")
+#            try:
+#                print("category = %s"%(host_list[0].category))
+#            except IndexError:
+#                print("no")
+#            for host in host_list:
+#                print(host)
         self.multi_category()
         
 #Test 

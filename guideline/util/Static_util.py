@@ -15,8 +15,7 @@ class Static_util:
         # DB 연결
         db = pymysql.connect(host=ip, port=int(port), user=id, passwd=pw, charset='utf8', db="guideline")
         cur = db.cursor()
-        params = []
-        if isinstance(params,dict) and len(params) >= 1 :
+        if params:
             cur.execute(cmd,params)
         else :
             cur.execute(cmd)
@@ -52,7 +51,11 @@ class Static_util:
     def para_connect(self,host,cmd,time1) :
         cli = paramiko.SSHClient() # ssh 클라이언트 인스턴스를 생성 ---> cli 객체
         cli.set_missing_host_key_policy(paramiko.AutoAddPolicy)  # 접속할 때 에러 메시지 처리 
-        cli.connect(host.ip,username=host.username,password=host.password) #ip,username,password로 ssh 연결
+        try:
+            cli.connect(host.ip,username=host.username,password=host.password) #ip,username,password로 ssh 연결
+        except Exception as e:
+            print(e)
+
         result = ""
         cmd_list = cmd.strip().split("\n")
         
